@@ -1,4 +1,4 @@
-package fr.rennes.epsi.poec.bob.guitarshop.conf;
+package fr.rennes.epsi.poec.bob.guitarshop.Conf;
 
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
