@@ -1,4 +1,4 @@
-package fr.rennes.epsi.poec.bob.guitarshop.domain.user;
+package fr.rennes.epsi.poec.bob.guitarshop.Domain.user;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
