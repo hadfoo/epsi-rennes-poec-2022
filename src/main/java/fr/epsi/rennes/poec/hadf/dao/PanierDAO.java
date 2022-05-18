@@ -11,6 +11,8 @@ import java.util.ArrayList;
 
 import javax.sql.DataSource;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -21,6 +23,8 @@ import fr.epsi.rennes.poec.hadf.exception.TechnicalException;
 
 @Repository
 public class PanierDAO {
+	
+	private static final Logger logger = LogManager.getLogger(PanierDAO.class);
 	
 	@Autowired
 	private DataSource ds;
@@ -82,16 +86,51 @@ public class PanierDAO {
 		String sql = "select " +
 						"pizza.id as id, " +
 						"pizza.libelle as libelle, " +
-						"array_agg((" +
-							"ingredient.id, ':', ingredient.libelle, ':', ingredient.prix)) " +
+						"array_agg(ingredient.id) " +
 						"as ingredients " +
 					 "from pizza " +
 					 "join pizza_ingredient " +
 					 	"on pizza_ingredient.pizza_id = pizza.id " +
 					 "join ingredient " +
 					 	"on ingredient.id = pizza_ingredient.ingredient_id " +
-					 "where id = '" + pizzaId + "'" +
+					 "where pizza.id = ? " +
 					 "group by pizza.id";
+		
+		try {
+			Connection conn = ds.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, pizzaId);
+			
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
+				Pizza pizza = new Pizza();
+				pizza.setId(rs.getInt("id"));
+				pizza.setLibelle(rs.getString("libelle"));
+				pizza.setIngredients(new ArrayList<>());
+				
+				String ingredientsString = rs.getString("ingredients");
+				System.out.println(ingredientsString);
+				logger.debug("Liste des ingredients: {}", ingredientsString);
+				if (ingredientsString != null && ingredientsString.length() > 0) {
+					ingredientsString = ingredientsString.substring(1, ingredientsString.length() - 2);
+					String[] ingredientsTab = ingredientsString.split(",");
+					for (String ingredient : ingredientsTab) {
+						String[] colonnes = ingredient.split("\\:");
+						
+						Ingredient ingredientPojo = new Ingredient();
+						ingredientPojo.setId(Integer.parseInt(ingredient));
+//						ingredientPojo.setLibelle(colonnes[1]);
+//						ingredientPojo.setPrix(Double.parseDouble(colonnes[2]));
+						
+						pizza.getIngredients().add(ingredientPojo);
+					}
+				}
+				return pizza;
+			}
+			return null;
+		} catch (SQLException e) {
+			throw new TechnicalException(e);
+		}
 	}
 	
 	public Panier getPanierById(int panierId) {
