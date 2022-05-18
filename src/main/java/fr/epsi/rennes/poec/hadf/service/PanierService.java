@@ -1,5 +1,7 @@
 package fr.epsi.rennes.poec.hadf.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +25,14 @@ public class PanierService {
 	}
 
 	public Panier getPanierById(int panierId) {
-		return panierDAO.getPanierById(panierId);
+		Panier panier = panierDAO.getPanierById(panierId);
+		List<Pizza> pizzas = panier.getPizzas();
+		double prixTotal = 0;
+		for (int i = 0; i < pizzas.size(); i++) {
+			double prixPizza = 0;
+			Pizza pizza = pizzas.get(i);
+		}
+		return panier;
 	}
 
 }

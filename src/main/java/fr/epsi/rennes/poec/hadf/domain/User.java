@@ -11,7 +11,7 @@ public class User implements UserDetails {
 	
 	private String email;
 	private String password;
-	private String role;
+	private UserRole role;
 	private boolean active = true;
 	
 	public String getEmail() {
@@ -27,15 +27,15 @@ public class User implements UserDetails {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public String getRole() {
+	public UserRole getRole() {
 		return role;
 	}
-	public void setRole(String role) {
+	public void setRole(UserRole role) {
 		this.role = role;
 	}
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return List.of(UserRole.valueOf(role));
+		return List.of(role);
 	}
 	@Override
 	public String getUsername() {

@@ -11,6 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 import fr.epsi.rennes.poec.hadf.domain.User;
+import fr.epsi.rennes.poec.hadf.domain.UserRole;
 
 @Repository
 public class UserDAO {
@@ -32,7 +33,7 @@ public class UserDAO {
 			User user = new User();
 			user.setEmail(rs.getString(1));
 			user.setPassword(rs.getString(2));
-			user.setRole(rs.getString(3));
+			user.setRole(UserRole.valueOf(rs.getString(3)));
 			return user;
 		} else {
 			return null;

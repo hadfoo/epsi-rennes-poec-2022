@@ -39,7 +39,7 @@ public class UserService implements UserDetailsService {
 	
 	public void addUser(User user) {
 		try {
-			user.setRole(UserRole.ROLE_USER.name());
+			user.setRole(UserRole.ROLE_USER);
 			userDAO.addUser(user);
 		} catch (SQLException e) {
 			logger.error(e.getMessage(), e);

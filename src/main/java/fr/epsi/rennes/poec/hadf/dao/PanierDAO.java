@@ -109,7 +109,6 @@ public class PanierDAO {
 				pizza.setIngredients(new ArrayList<>());
 				
 				String ingredientsString = rs.getString("ingredients");
-				System.out.println(ingredientsString);
 				logger.debug("Liste des ingredients: {}", ingredientsString);
 				if (ingredientsString != null && ingredientsString.length() > 0) {
 					ingredientsString = ingredientsString.substring(1, ingredientsString.length() - 2);
