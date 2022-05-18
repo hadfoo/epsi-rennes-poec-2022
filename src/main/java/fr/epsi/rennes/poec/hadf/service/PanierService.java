@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import fr.epsi.rennes.poec.hadf.dao.PanierDAO;
 import fr.epsi.rennes.poec.hadf.domain.Panier;
@@ -31,8 +32,26 @@ public class PanierService {
 		for (int i = 0; i < pizzas.size(); i++) {
 			double prixPizza = 0;
 			Pizza pizza = pizzas.get(i);
+			if (pizza.getIngredients() == null) {
+				continue;
+			}
+			for (int j = 0; j < pizza.getIngredients().size(); j++) {
+				prixPizza += pizza.getIngredients().get(j).getPrix();
+			}
+			pizza.setPrix(prixPizza);
+			prixTotal += prixPizza;
 		}
+		panier.setTotalPrix(prixTotal);
 		return panier;
+	}
+	
+	@Transactional
+	public void removePizza(Pizza pizza, int panierId) {
+		panierDAO.removePizza(panierId, pizza.getId());
+		for (int i = 0; i < pizza.getIngredients().size(); i++) {
+			// supprimer les ingredients
+			// ce qui revient à supprimer des lignes dans la table d'association
+		}
 	}
 
 }

@@ -11,8 +11,8 @@ import java.util.ArrayList;
 
 import javax.sql.DataSource;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -24,7 +24,7 @@ import fr.epsi.rennes.poec.hadf.exception.TechnicalException;
 @Repository
 public class PanierDAO {
 	
-	private static final Logger logger = LogManager.getLogger(PanierDAO.class);
+	private static final Logger logger = LoggerFactory.getLogger(PanierDAO.class);
 	
 	@Autowired
 	private DataSource ds;
@@ -175,6 +175,10 @@ public class PanierDAO {
 		} catch (SQLException e) {
 			throw new TechnicalException(e);
 		}
+	}
+	
+	public void removePizza(int panierId, int pizzaId) {
+		
 	}
 
 }
