@@ -1,7 +1,8 @@
 <template>
-  <GuitarShopHome/>
+  <GuitarShopHome v-if="this.show_home"/>
 
-<ProductList/>
+  <button v-on:click=" this.show_home = !this.show_home"> Login </button>
+<ProductList v-if="!this.show_home"/>
 
 
 
@@ -16,6 +17,16 @@ export default {
   components: {
     ProductList,
     GuitarShopHome
+  },
+  data () {
+    return {
+      show_home: true
+    }
+  },
+  method: {
+    logtoorder () {
+      this.show_home = !this.show_home
+    }
   }
 }
 </script>
