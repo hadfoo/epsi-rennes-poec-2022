@@ -14,6 +14,7 @@ import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import fr.epsi.rennes.poec.hadf.domain.Ingredient;
 import fr.epsi.rennes.poec.hadf.domain.Panier;
 import fr.epsi.rennes.poec.hadf.domain.Pizza;
 import fr.epsi.rennes.poec.hadf.exception.TechnicalException;
@@ -77,6 +78,22 @@ public class PanierDAO {
 		throw new TechnicalException(new SQLException("Panier creation error"));
 	}
 	
+	public Pizza getPizzaById(int pizzaId) {
+		String sql = "select " +
+						"pizza.id as id, " +
+						"pizza.libelle as libelle, " +
+						"array_agg((" +
+							"ingredient.id, ':', ingredient.libelle, ':', ingredient.prix)) " +
+						"as ingredients " +
+					 "from pizza " +
+					 "join pizza_ingredient " +
+					 	"on pizza_ingredient.pizza_id = pizza.id " +
+					 "join ingredient " +
+					 	"on ingredient.id = pizza_ingredient.ingredient_id " +
+					 "where id = '" + pizzaId + "'" +
+					 "group by pizza.id";
+	}
+	
 	public Panier getPanierById(int panierId) {
 		String sql = "select " +
 						"panier.id as panierId, " +
@@ -101,15 +118,16 @@ public class PanierDAO {
 				
 				panier.setPizzas(new ArrayList<>());
 				String pizzas = rs.getString("pizzas");
+				if (pizzas == null || pizzas.length() == 0) {
+					return panier;
+				}
 				pizzas = pizzas.substring(1, pizzas.length() - 2);
 				
 				for (String pizzaId : pizzas.split(",")) {
 					if (pizzaId.length() == 0) {
 						continue;
 					}
-					Pizza pizza = new Pizza();
-					pizza.setId(Integer.parseInt(pizzaId));
-					
+					Pizza pizza = getPizzaById(Integer.parseInt(pizzaId));
 					panier.getPizzas().add(pizza);
 				}
 				return panier;
