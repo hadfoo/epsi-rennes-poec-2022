@@ -52,4 +52,16 @@ public class ProductService {
             throw new TechnicalException(e);
         }
     }
+
+    public List<String> getAllCategory() throws SQLException {
+        logger.info("##########ProductService getAllCategory()");
+
+
+        try {
+            return dao.getAllCategory();
+        } catch (SQLException e) {
+            logger.error(e.getMessage(), e);
+            throw e;
+        }
+    }
 }

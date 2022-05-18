@@ -45,6 +45,12 @@ public class ProductController {
         return (List<Product>) response;
     }
 
+    @GetMapping("/category")
+    public List<String> getAllCategory() throws SQLException {
+        logger.info("##########ProductController getAllCategory()");
+        return productService.getAllCategory();
+    }
+
     @PostMapping("/product/add")
     public void createProduct(@RequestParam String brand, String model, int price) {
         logger.info("##########ProductController createProduct()");

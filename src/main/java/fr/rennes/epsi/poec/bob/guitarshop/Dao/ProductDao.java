@@ -95,4 +95,24 @@ public class ProductDao {
             throw new TechnicalException(e);
         }
     }
+
+    public List<String> getAllCategory() throws SQLException {
+        logger.info("##########ProductDao getAllProduct()");
+
+        List<String> category = new ArrayList<>();
+        String sql = "SELECT name FROM product_category";
+        try {
+            Connection conn = data_source.getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+
+                String current_category = (rs.getString(1));
+                category.add(current_category);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return category;
+    }
 }
