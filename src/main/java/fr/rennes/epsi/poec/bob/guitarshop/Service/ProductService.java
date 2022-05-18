@@ -43,6 +43,15 @@ public class ProductService {
         }
     }
 
+    public List<Product> getAllProductbyCategory(String filter_category) throws SQLException {
+        try {
+            return dao.getAllProductbyCategory(filter_category);
+        } catch (SQLException e) {
+            logger.error(e.getMessage(), e);
+            throw e;
+        }
+    }
+
     public void createProduct(Product new_product) {
         logger.info("##########ProductService createProduct()");
         try {

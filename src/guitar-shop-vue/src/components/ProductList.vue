@@ -8,10 +8,8 @@
           <ul>
             <li v-for="cat in category" v-bind:key="cat.id"><button v-on:click="cat_filter(cat)"> {{ cat }} </button></li>
             <li ><a href="#" v-on:click="reset_filter"> all </a></li>
-
           </ul>
         </li>
-
       </ul>
 
     </div>
@@ -144,13 +142,27 @@ export default {
       console.log(JSON.stringify(this.purchased_product))
     },
     cat_filter(obj) {
-      // fetch("/GuitarShop/product-list/cat=guitar")
-      //     .then((response) => response.json())
-      //     .then((data) => {
-      //       this.products = data;
-      //     });
-      console.log(obj)
-      this.products = []
+      let params = {
+        "category": obj
+      };
+
+      let query = Object.keys(params)
+          .map(k => encodeURIComponent(k) + '=' + encodeURIComponent(params[k]))
+          .join('&');
+
+      let url = '' +
+          'GuitarShop/product-list-filter?' + query;
+      console.log(url)
+
+      fetch(url)
+
+          .then((response) => response.json())
+          .then((data) => {
+            this.products = data;
+            console.log('request succeeded with JSON response', data)
+          }).catch(function (error) {
+        console.log('request failed', error)
+      });
     },
     reset_filter(){
       fetch("/GuitarShop/product-list")

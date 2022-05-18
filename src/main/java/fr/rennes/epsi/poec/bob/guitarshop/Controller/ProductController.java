@@ -28,6 +28,12 @@ public class ProductController {
         return productService.getAllProduct();
     }
 
+    @GetMapping("/product-list-filter")
+    public List<Product> getAllProductbyCategory(@RequestParam String category) throws SQLException {
+        logger.info("##########ProductController getAllProduct?????()");
+        return productService.getAllProductbyCategory(category);
+    }
+
     @GetMapping("/productGrep")
     public List<Product> getAllProduct(String filter, String filter_value) throws SQLException {
         logger.info("##########ProductController getAllProductGrep()");
@@ -50,6 +56,8 @@ public class ProductController {
         logger.info("##########ProductController getAllCategory()");
         return productService.getAllCategory();
     }
+
+
 
     @PostMapping("/product/add")
     public void createProduct(@RequestParam String brand, String model, int price) {
