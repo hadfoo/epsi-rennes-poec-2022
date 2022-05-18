@@ -10,9 +10,10 @@
 <body>
 <div id="app">
 	<div class="pizza-list">
-		<div class="pizza-item" v-for="pizza in pizzas">
+		<div class="pizza-item" v-for="pizza in panier.pizzas">
 			{{pizza.libelle}}<br>
-			Nombre d'ingredients : {{pizza.ingredients.length}}<br>
+			Nombre d'ingredients :
+			{{pizza.ingredients ? pizza.ingredients.length : 0}}<br>
 			<button v-on:click="supprimerPizza(pizza)">Supprimer</button>
 		</div>
 	</div>

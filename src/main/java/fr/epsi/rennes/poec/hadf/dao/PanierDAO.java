@@ -104,6 +104,9 @@ public class PanierDAO {
 				pizzas = pizzas.substring(1, pizzas.length() - 2);
 				
 				for (String pizzaId : pizzas.split(",")) {
+					if (pizzaId.length() == 0) {
+						continue;
+					}
 					Pizza pizza = new Pizza();
 					pizza.setId(Integer.parseInt(pizzaId));
 					
