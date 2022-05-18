@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Panier</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script defer src="/js/panier.js"></script>
+    <link href="../css/panier.css" rel="stylesheet">
+</head>
+<body>
+<div id="app">
+    <div>
+        <h3>
+            Votre panier :
+        </h3>
+    </div>
+    <div class="pizza-list"
+         v-for="pizza in pizza_panier" v-if="pizza.id">
+        <h4 class="mon_panier_h4">
+            {{pizza.label}}<br>
+            <button class="button" v-on:click="delPizza(pizza)">
+                Supprimer cette pizza
+            </button>
+            <br>
+        </h4>
+    </div>
+    <div class="panier">
+        <h4>
+            Nombre de pizzas :
+            {{panier && panier.pizzas ? panier.pizzas.length : 0}}
+        </h4>
+    </div>
+    <div>
+        <button class="return-index">
+            <a class="return-index-link" href="../index.html">
+                Retour au menu
+            </a>
+        </button>
+    </div>
+</div>
+</body>
+</html>

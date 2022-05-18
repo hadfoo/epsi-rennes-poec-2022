@@ -1,0 +1,64 @@
+html {
+    background-color: #202124;
+}
+
+body {
+    font-family: Calibri, Verdana, sans-serif;
+    color: white;
+}
+
+.button {
+    background-color: #202124;
+    color: white;
+    border: 2px solid crimson;
+    border-radius: 8px;
+    text-align: center;
+    transition-duration: 0.4s;
+    padding: 0.5%;
+}
+
+.button:hover {
+    background-color: crimson;
+    color: white;
+    box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
+}
+
+.button:active {
+    background-color: crimson;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+}
+
+.button_panier {
+    background-color: #202124;
+    color: white;
+    border: 2px solid forestgreen;
+    border-radius: 8px;
+    text-align: center;
+    transition-duration: 0.4s;
+    padding: 0.5%;
+}
+
+.button_panier:hover {
+    background-color: forestgreen;
+    color: black;
+    box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
+}
+
+.pizza-item {
+    font-weight: bold;
+}
+
+.pizza-add-panier {
+    margin-bottom: 0.75%;
+}
+
+.add-panier-scroll {
+    height: 500px;
+    overflow-y: scroll;
+}
+
+.voir-panier {
+    color: white;
+    text-decoration: none;
+}
