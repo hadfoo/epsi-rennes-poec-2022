@@ -58,5 +58,15 @@ public class IndexController {
 		
 		return response;
 	}
+	
+	@GetMapping("/public/pizza")
+	public Response<Pizza> getPizza(@RequestParam int pizzaId) {
+		Pizza pizza = pizzaService.getPizzaById(pizzaId);
+		
+		Response<Pizza> response = new Response<>();
+		response.setData(pizza);
+		
+		return response;
+	}
 
 }

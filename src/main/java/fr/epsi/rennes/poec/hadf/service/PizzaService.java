@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import fr.epsi.rennes.poec.hadf.dao.PanierDAO;
 import fr.epsi.rennes.poec.hadf.dao.PizzaDAO;
 import fr.epsi.rennes.poec.hadf.domain.Pizza;
 import fr.epsi.rennes.poec.hadf.exception.BusinessException;
@@ -14,6 +15,9 @@ public class PizzaService {
 	
 	@Autowired
 	private PizzaDAO pizzaDAO;
+	
+	@Autowired
+	private PanierDAO panierDAO;
 
 	public void createPizza(Pizza pizza) throws BusinessException {
 		if (pizza.getLibelle() == null) {
@@ -38,6 +42,10 @@ public class PizzaService {
 	public List<Pizza> getAllPizzas() {
 		List<Pizza> pizzas = pizzaDAO.getAllPizzas();
 		return pizzas;
+	}
+	
+	public Pizza getPizzaById(int pizzaId) {
+		return panierDAO.getPizzaById(pizzaId);
 	}
 
 }
