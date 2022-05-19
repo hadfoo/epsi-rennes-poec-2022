@@ -20,6 +20,9 @@ public class PanierDAO {
     @Autowired
     private DataSource ds;
 
+    @Autowired
+    private PizzaDAO pizzaDAO;
+
     public void addPizza(Pizza pizza, int panierId) {
 
         String sql = "insert into panier_pizza " +
@@ -163,6 +166,26 @@ public class PanierDAO {
             throw new TechnicalException(e);
         }
 
+    }
+
+    public double getPrixPanier(int panierId) {
+        String sql = "select pizzaid " +
+                "from panier_pizza " +
+                "where panierid=?;";
+
+        try (Connection conn = ds.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, panierId);
+            ResultSet rs = ps.executeQuery();
+            double prixPanier = 0;
+            while (rs.next()) {
+                prixPanier += pizzaDAO.getPrixPizza(rs.getInt(1));
+            }
+            return prixPanier;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
 

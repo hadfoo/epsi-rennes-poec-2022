@@ -5,6 +5,7 @@ var app = new Vue({
             pizzas: [],
             panier: [],
             pizza_panier: [],
+            somme: 0,
 
         }
     },
@@ -21,7 +22,11 @@ var app = new Vue({
         axios.get('/public/pizzas')
             .then(response => {
                 this.pizzas = response.data.data;
-            })
+            });
+        axios.get('/public/prix_panier?panierId=' + parseInt(panierId))
+            .then(response => {
+                this.somme = response.data.data;
+            });
     },
     methods: {
         delPizza(pizza) {
@@ -40,6 +45,10 @@ var app = new Vue({
                             .then(response => {
                                 this.pizza_panier = response.data.data;
                             })
+                        axios.get('/public/prix_panier?panierId=' + parseInt(panierId))
+                            .then(response => {
+                                this.somme = response.data.data;
+                            });
 
                     }
                 })

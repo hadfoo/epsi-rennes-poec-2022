@@ -63,5 +63,10 @@ body {
     color: white;
     text-decoration: none;
 }
+.panier-scroll {
+    height: auto;
+    max-height: 420px;
+    overflow-y: auto;
+}
 
 

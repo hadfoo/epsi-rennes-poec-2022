@@ -33,9 +33,9 @@ public class PizzaService {
     }
 
     public List<Pizza> getAllPizzas() {
-        List<Pizza> pizzas = pizzaDAO.getAllPizzas();
-
-
-        return pizzas;
+        return pizzaDAO.getAllPizzas();
+    }
+    public double getPrixPizza(int pizzaid) {
+        return pizzaDAO.getPrixPizza(pizzaid);
     }
 }

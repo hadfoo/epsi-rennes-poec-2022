@@ -34,4 +34,9 @@ public class PanierService {
     public List<Pizza> getPizzaLabelInPanier(int panierId) {
         return panierDAO.getPizzaLabelInPanier(panierId);
     }
-}
+
+    public double getPrixPanier(int panierId) {
+        return panierDAO.getPrixPanier(panierId);
+    }
+
+    }

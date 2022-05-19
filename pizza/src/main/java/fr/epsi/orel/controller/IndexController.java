@@ -39,11 +39,25 @@ public class IndexController {
 
         Pizza pizza = new Pizza();
         pizza.setId(pizzaid);
+        pizza.setPrix(getPrixPizza(pizza.getId()));
 
         panierid = panierService.addPizza(pizza, panierid);
 
         Response<Integer> response = new Response<>();
         response.setData(panierid);
+
+        return response;
+    }
+
+    private double getPrixPizza(int pizzaid) {
+        return pizzaService.getPrixPizza(pizzaid);
+    }
+
+    @GetMapping("/public/prix_panier")
+    public Response<Double> getPrixPanier(@RequestParam int panierId) {
+        double prixPanier = panierService.getPrixPanier(panierId);
+        Response<Double> response = new Response<>();
+        response.setData(prixPanier);
 
         return response;
     }

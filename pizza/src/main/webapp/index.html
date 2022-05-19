@@ -20,10 +20,9 @@
             </div>
         </div>
         <div class="panier">
-            <h4>
                 Votre panier contient actuellement {{panier && panier.pizzas ? panier.pizzas.length : 0}} pizza{{panier
-                && panier.pizzas && panier.pizzas.length>1 ? "s.":"."}}
-            </h4>
+                && panier.pizzas && panier.pizzas.length>1 ? "s.":"."}}<br>
+                Prix total de la commande : {{somme}}€
         </div>
         <button class="button_panier" v-on:click="public/panier.html">
             <a class="voir-panier" href="public/panier.html">
