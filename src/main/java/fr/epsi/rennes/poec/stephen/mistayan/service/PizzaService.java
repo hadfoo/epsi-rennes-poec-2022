@@ -1,8 +1,11 @@
 package fr.epsi.rennes.poec.stephen.mistayan.service;
 
 import fr.epsi.rennes.poec.stephen.mistayan.dao.pizzaDAO;
+import fr.epsi.rennes.poec.stephen.mistayan.domain.Ingredient;
 import fr.epsi.rennes.poec.stephen.mistayan.domain.Pizza;
 import fr.epsi.rennes.poec.stephen.mistayan.exception.BusinessException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
@@ -21,7 +24,8 @@ import java.util.List;
 @Service
 @Repository
 public class PizzaService {
-    //    private static final Logger logger = LogManager.getLogger(String.valueOf(PizzaService.class));
+    private static final Logger logger = LogManager.getLogger(PizzaService.class);
+
     @Autowired
     private pizzaDAO pizzadao;
 
@@ -29,6 +33,9 @@ public class PizzaService {
     public void createPizza(Pizza pizza) throws BusinessException {
         if (pizza.getLabel() == null) {
             throw new BusinessException("pizza.label.null");
+        }
+        for (Ingredient ingredient : pizza.getIngredients()) {
+
         }
         if (pizza.getIngredients() == null || pizza.getIngredients().size() < 3) {
             throw new BusinessException("pizza.ingredients.invalides");
@@ -48,8 +55,9 @@ public class PizzaService {
     }
 
     public List<Pizza> getAllPizzas() {
-        List<Pizza> pizzas = pizzadao.getAll();
-        return pizzas;
+        return pizzadao.getAll();
+
     }
+
 
 }
