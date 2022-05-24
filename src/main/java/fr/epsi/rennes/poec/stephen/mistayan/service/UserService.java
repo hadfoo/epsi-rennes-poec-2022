@@ -2,6 +2,7 @@ package fr.epsi.rennes.poec.stephen.mistayan.service;
 
 import fr.epsi.rennes.poec.stephen.mistayan.dao.CommandeDAO;
 import fr.epsi.rennes.poec.stephen.mistayan.dao.UserDAO;
+import fr.epsi.rennes.poec.stephen.mistayan.domain.Commande;
 import fr.epsi.rennes.poec.stephen.mistayan.domain.User;
 import fr.epsi.rennes.poec.stephen.mistayan.domain.UserRole;
 import fr.epsi.rennes.poec.stephen.mistayan.exception.TechnicalException;
@@ -14,6 +15,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
+import java.util.List;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -21,13 +23,11 @@ public class UserService implements UserDetailsService {
     private static final Logger logger = LogManager.getLogger(String.valueOf(UserService.class));
     private final UserDAO userDAO;
     private final CommandeDAO commandeDAO;
-    private final PanierService panierService;
 
     @Autowired
-    public UserService(UserDAO userDAO, CommandeDAO commandeDAO, PanierService panierService) {
+    public UserService(UserDAO userDAO, CommandeDAO commandeDAO) {
         this.userDAO = userDAO;
         this.commandeDAO = commandeDAO;
-        this.panierService = panierService;
     }
 
     @Override
@@ -39,7 +39,6 @@ public class UserService implements UserDetailsService {
             }
             return user;
         } catch (SQLException e) {
-//            logger.error(e.getMessage(), e);
             throw new TechnicalException(e);
         }
     }
@@ -54,9 +53,29 @@ public class UserService implements UserDetailsService {
         }
     }
 
-    public long userOrder(String userName, int panier_id) throws SQLException {
+    public int userOrder(String userName, int panierId) throws SQLException {
+        try {
+            commandeDAO.order(userName, panierId);
+            return 1;
+        } catch (SQLException e) {
+            throw new TechnicalException(e);
+        }
+    }
 
-        return commandeDAO.order(userName, panier_id);
+    public int getUserIdFromName(String userName) throws SQLException {
+        try {
+            return userDAO.getUserByName(userName); // on assumera que springboot ne nous ment pas ?
+        } catch (SQLException e) {
+            throw new TechnicalException(e);
+        }
+    }
+
+    public List<Commande> getUserIdOrders(int userId) throws SQLException {
+        try {
+            return commandeDAO.getOrdersFromUserId(userId);
+        } catch (SQLException e) {
+            throw new TechnicalException(e);
+        }
     }
 }
 
