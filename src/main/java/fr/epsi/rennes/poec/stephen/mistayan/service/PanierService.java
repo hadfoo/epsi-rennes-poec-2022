@@ -3,9 +3,12 @@ package fr.epsi.rennes.poec.stephen.mistayan.service;
 import fr.epsi.rennes.poec.stephen.mistayan.dao.PanierDAO;
 import fr.epsi.rennes.poec.stephen.mistayan.domain.Panier;
 import fr.epsi.rennes.poec.stephen.mistayan.domain.Pizza;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+
+import static org.eclipse.jdt.internal.compiler.codegen.ConstantPool.GetClass;
 
 /**
  * Author : Stephen Mistayan
@@ -17,42 +20,49 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class PanierService {
-
+    private static final Logger logger = LogManager.getLogger(GetClass);
     private final PanierDAO panierDAO;
+    private final PizzaService pizzaService;
 
     @Autowired
-    public PanierService(PanierDAO panierDAO) {this.panierDAO = panierDAO;}
-    @Transactional
-    public int addPizza(Pizza pizza, int panier_id) {
-        //fonction pour ajouter pizza au panier.
-        boolean exists = panierDAO.doesPanierExist(panier_id);
-        if (!exists) {
-            // vérifier que le panier existe avant d'en créer un
-            panier_id = panierDAO.CreatePanier();
-        }
-        panierDAO.addPizza(pizza, panier_id);
-        return panier_id;
+    public PanierService(PanierDAO panierDAO, PizzaService pizzaService) {
+        this.panierDAO = panierDAO;
+        this.pizzaService = pizzaService;
     }
 
-    public int remPizza(int pizza_id, int panier_id) {
-        boolean exists = panierDAO.doesPanierExist(panier_id);
+    public int addPizza(Pizza pizza, int panierId) {
+        //fonction pour ajouter pizza au panier.
+        boolean exists = panierDAO.doesPanierExist(panierId);
+        if (!exists) {
+            // vérifier que le panier existe avant d'en créer un
+            panierId = panierDAO.CreatePanier();
+        }
+        panierDAO.addPizza(pizza, panierId);
+        return panierId;
+    }
+
+    public int remPizza(int pizza_id, int panierId) {
+        boolean exists = panierDAO.doesPanierExist(panierId);
         // vérifie que le panier existe avant action
         if (!exists) {
             return -1;
         }
-        panierDAO.removePizza(pizza_id, panier_id);
-        return panier_id;
+        panierDAO.removePizza(pizza_id, panierId);
+        return panierId;
     }
 
-    public Panier getPanierById(int panier_id) {
+    public Panier getPanierById(int panierId) {
         /**
-         * @return: panier_id.exists() ? panier : null
+         * @return: panierId.exists() ? panier : new Panier();
          */
-        boolean exists = panierDAO.doesPanierExist(panier_id);
+        logger.info("getPanierById(" + panierId + ")");
+        boolean exists = panierDAO.doesPanierExist(panierId);
         // vérifie que le panier existe avant action
         if (!exists) {
-            return null;
+            panierId = panierDAO.CreatePanier();
         }
-        return panierDAO.getPanierById(panier_id);
+        logger.info("getPanierById ? " + exists + " : " + panierId);
+        return panierDAO.getPanierById(panierId);
     }
+
 }
