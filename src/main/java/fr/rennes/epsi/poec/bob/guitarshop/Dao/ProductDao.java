@@ -2,6 +2,7 @@ package fr.rennes.epsi.poec.bob.guitarshop.Dao;
 
 import fr.rennes.epsi.poec.bob.guitarshop.Domain.Product;
 import fr.rennes.epsi.poec.bob.guitarshop.Exception.TechnicalException;
+import jdk.swing.interop.SwingInterOpUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,16 +36,48 @@ public class ProductDao {
         try {
             Connection conn = data_source.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql);
+            createProductObjFromDb(products, ps);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return products;
+    }
+
+    public List<String> getAllCategory() throws SQLException {
+        logger.info("##########ProductDao getAllProduct()");
+
+        List<String> category = new ArrayList<>();
+        String sql = "SELECT name FROM product_category";
+        try {
+            Connection conn = data_source.getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                Product current_product = new Product();
-                current_product.setBrand(rs.getString(1));
-                current_product.setModel(rs.getString(2));
-                current_product.setPrice(rs.getInt(3));
-                products.add(current_product);
+
+                String current_category = (rs.getString(1));
+                category.add(current_category);
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+        return category;
+    }
+
+    public List<Product> getAllProductbyCategory(String filter_value) throws SQLException {
+        logger.info("##########ProductDao getAllProductGrep()");
+
+        List<Product> products = new ArrayList<>();
+        String sql = "SELECT brand, model, price FROM product ";
+        sql += "INNER JOIN product_category ON product.category = product_category.id ";
+        sql += "WHERE product_category.name = ?";
+        System.out.println(sql);
+        try {
+            Connection conn = data_source.getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, filter_value);
+            createProductObjFromDb(products, ps);
+        } catch (SQLException e) {
+            throw new TechnicalException(e);
         }
         return products;
     }
@@ -60,18 +93,22 @@ public class ProductDao {
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, filter);
             ps.setString(2, filter_value);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                Product current_product = new Product();
-                current_product.setBrand(rs.getString(1));
-                current_product.setModel(rs.getString(2));
-                current_product.setPrice(rs.getInt(3));
-                products.add(current_product);
-            }
+            createProductObjFromDb(products, ps);
         } catch (SQLException e) {
             throw new TechnicalException(e);
         }
         return products;
+    }
+
+    private void createProductObjFromDb(List<Product> products, PreparedStatement ps) throws SQLException {
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            Product current_product = new Product();
+            current_product.setBrand(rs.getString(1));
+            current_product.setModel(rs.getString(2));
+            current_product.setPrice(rs.getInt(3));
+            products.add(current_product);
+        }
     }
 
     public void createProduct(Product new_product) throws SQLException{
@@ -95,4 +132,6 @@ public class ProductDao {
             throw new TechnicalException(e);
         }
     }
+
+
 }
