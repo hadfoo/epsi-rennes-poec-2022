@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 public class Product {
 
+    private int id;
+
     private String brand;
     private String model;
     private int price;
@@ -30,5 +32,13 @@ public class Product {
 
     public void setPrice(int price) {
         this.price = price;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }
