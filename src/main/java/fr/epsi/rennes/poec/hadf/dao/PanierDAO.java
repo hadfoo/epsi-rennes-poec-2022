@@ -86,7 +86,7 @@ public class PanierDAO {
 		String sql = "select " +
 						"pizza.id as id, " +
 						"pizza.libelle as libelle, " +
-						"array_agg(ingredient.id) " +
+						"group_concat(ingredient.id) " +
 						"as ingredients " +
 					 "from pizza " +
 					 "join pizza_ingredient " +
@@ -111,7 +111,6 @@ public class PanierDAO {
 				String ingredientsString = rs.getString("ingredients");
 				logger.debug("Liste des ingredients: {}", ingredientsString);
 				if (ingredientsString != null && ingredientsString.length() > 0) {
-					ingredientsString = ingredientsString.substring(1, ingredientsString.length() - 2);
 					String[] ingredientsTab = ingredientsString.split(",");
 					for (String ingredient : ingredientsTab) {
 						String[] colonnes = ingredient.split("\\:");
@@ -136,7 +135,7 @@ public class PanierDAO {
 		String sql = "select " +
 						"panier.id as panierId, " +
 						"panier.date as panierDate, " +
-						"array_agg(pizza.id) as pizzas " +
+						"group_concat(pizza.id) as pizzas " +
 					 "from panier " +
 					 "right join panier_pizza " +
 					 	"on panier_pizza.panier_id = panier.id " +
@@ -159,7 +158,6 @@ public class PanierDAO {
 				if (pizzas == null || pizzas.length() == 0) {
 					return panier;
 				}
-				pizzas = pizzas.substring(1, pizzas.length() - 2);
 				
 				for (String pizzaId : pizzas.split(",")) {
 					if (pizzaId.length() == 0) {
@@ -176,9 +174,22 @@ public class PanierDAO {
 			throw new TechnicalException(e);
 		}
 	}
-	
-	public void removePizza(int panierId, int pizzaId) {
-		
+
+
+	public void removePizza(int pizzaId, int panierId) {
+		String sql = "DELETE FROM panier_pizza " +
+				"    WHERE panier_id = ? " +
+				"    AND pizza_id = ? " +
+				"    LIMIT 1;";
+
+		try (PreparedStatement ps = ds.getConnection().prepareStatement(sql)) {
+			ps.setInt(1, Math.max(panierId, 0));
+			ps.setInt(2, Math.max(pizzaId, 0));
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
 	}
+
 
 }

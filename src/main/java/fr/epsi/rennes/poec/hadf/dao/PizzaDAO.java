@@ -62,7 +62,7 @@ public class PizzaDAO {
 		String sql = "select " +
 						"pizza.id as pizzaId, " +
 						"pizza.libelle as pizzaLibelle, " +
-						"array_agg(ingredient.id) as ingredients " +
+						"group_concat(ingredient.id) as ingredients " +
 					 "from pizza " +
 					 "right join pizza_ingredient " +
 					 	"on pizza_ingredient.pizza_id = pizza.id " +
@@ -80,7 +80,6 @@ public class PizzaDAO {
 			while (rs.next()) {
 				Pizza pizza = new Pizza();
 				String ingredients = rs.getString("ingredients");
-				ingredients = ingredients.substring(1, ingredients.length() - 2);
 				
 				List<Ingredient> ingredientsList = new ArrayList<>();
 				for (String ingredient : ingredients.split(",")) {

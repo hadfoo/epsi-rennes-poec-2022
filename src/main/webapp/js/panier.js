@@ -17,7 +17,11 @@ var app = new Vue({
 			})
 		},
 		supprimerPizza(pizza) {
-			axios.post('/public/pizza/remove', pizza.id)
+			let panierId = localStorage.getItem('panier.id');
+			if (panierId){
+				panierId -1;
+			}
+			axios.post('/public/pizza/remove'+ '?pizzaId=' + pizza.id + '&panierId=' + panierId)
 			.then(response => {
 				if (response.data.success) {
 					this.loadPanier();

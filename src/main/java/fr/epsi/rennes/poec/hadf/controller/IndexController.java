@@ -2,11 +2,10 @@ package fr.epsi.rennes.poec.hadf.controller;
 
 import java.util.List;
 
+import fr.epsi.rennes.poec.hadf.exception.TechnicalException;
+import org.apache.logging.log4j.core.util.JsonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import fr.epsi.rennes.poec.hadf.domain.Panier;
 import fr.epsi.rennes.poec.hadf.domain.Pizza;
@@ -58,5 +57,48 @@ public class IndexController {
 		
 		return response;
 	}
+
+	@GetMapping("/public/pizza")
+	public Response<Pizza> getPizza(@RequestParam int pizzaId){
+		Pizza pizza = pizzaService.getPizzaById(pizzaId);
+
+		Response<Pizza> response = new Response<>();
+		response.setData(pizza);
+
+		return response;
+	}
+
+	@PostMapping("/public/pizza/remove")
+	public Response<Integer> removePizza(@RequestParam int pizzaId, @RequestParam int panierId){
+
+		try {
+			panierId = panierService.removePizza(pizzaId, panierId);
+
+			Response<Integer> response = new Response<>();
+
+			response.setSuccess(true);
+			response.setData(panierId);
+			return response;
+
+		} catch (TechnicalException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+//	@PostMapping("/public/pizza/remove")
+//	public Response<Void> removePizza(@RequestParam int pizzaId, @RequestParam int panierId){
+//
+//		try {
+//			panierService.removePizza(pizzaId, panierId);
+//
+//			Response<Void> response = new Response<>();
+//
+//			response.setSuccess(true);
+//			return response;
+//
+//		} catch (TechnicalException e) {
+//			throw new RuntimeException(e);
+//		}
+//	}
 
 }

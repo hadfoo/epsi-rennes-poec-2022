@@ -25,7 +25,7 @@ public class UserDAO {
 	public User getUserByEmail(String email) throws SQLException {
 		String sql =
 				"select email, password, role " +
-				"from public.user " +
+				"from user " +
 				"where email = '" + email + "'";
 		Statement stmt = ds.getConnection().createStatement();
 		ResultSet rs = stmt.executeQuery(sql);
@@ -43,7 +43,7 @@ public class UserDAO {
 	public void addUser(User user) throws SQLException {
 		String password = passwordEncoder.encode(user.getPassword());
 		String sql =
-				"insert into public.user (email, password) " +
+				"insert into user (email, password) " +
 				"values ('" + user.getEmail() + "', '" + password + "')";
 
 		Statement stmt = ds.getConnection().createStatement();

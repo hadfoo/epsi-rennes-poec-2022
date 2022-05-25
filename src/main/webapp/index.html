@@ -17,7 +17,7 @@
 	</div>
 	<div class="pizza-list">
 		<div class="pizza-item" v-for="pizza in pizzas">
-			{{pizza.libelle}}<br>
+			<a v-bind:href="'/public/pizza.html?pizzaId='+pizza.id">{{pizza.libelle}}</a><br>
 			Nombre d'ingredients : {{pizza.ingredients.length}}<br>
 			<button v-on:click="ajouterPizza(pizza)">Ajouter</button>
 		</div>

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="/js/pizza-index.js" defer></script>
+</head>
+<body>
+    <div id="app">
+        Nom de la pizza : {{pizza.libelle}}<br>
+        Nombre d'ingrédients : {{pizza.ingredients ? pizza.ingredients.length : 0}}
+    </div>
+</body>
+</html>
