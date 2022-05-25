@@ -140,6 +140,76 @@ export default {
     },
     order() {
       console.log(JSON.stringify(this.purchased_product))
+      let params = {
+        "customer": 'default_customer',
+        "list":''
+      }
+      let product_id_array = []
+      this.purchased_product.forEach(
+          product => product_id_array.push(product.id)
+      )
+      params['list'] = product_id_array.join('-')
+
+      // let query = Object.keys(params)
+      //     .map(k => encodeURIComponent(k) + '=' + encodeURIComponent(params[k]))
+      //     .join('&');
+      //
+      // let url = '' + 'GuitarShop/order?' + query;
+      // console.log(url)
+      // fetch(url)
+
+      fetch('GuitarShop/order', {
+        method: 'POST', // or 'PUT'
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(params),
+      })
+          .then(response => response.json())
+          .then(data => {
+            console.log('Success:', data);
+          })
+          .catch((error) => {
+            console.error('Error:', error);
+          });
+
+      // this.purchased_product.forEach(
+      //     product => plist.push(JSON.parse(JSON.stringify(product))),
+      // )
+
+      //ASYNC
+      // const getData = async () => {
+      //   const response = await fetch('your api', {
+      //     method: 'POST',
+      //     body: JSON.stringify({
+      //       // your data
+      //     }),
+      //   });
+      //
+      //   const data = await response.json();
+      //   console.log(data);
+      //   // do what ever you want here
+      //
+      // };
+
+      //OR NOT
+      // fetch('you api', {
+      //   method: 'POST',
+      //   body: JSON.stringify({
+      //     // here put data you want to send
+      //   })
+      // })
+      //     .then((response) => response.json())
+      //     .then((json) => {
+      //           // you can do what ever you want here
+      //           console.log(json)
+      //         }
+      //     )
+
+      //console.log(json)
+
+
+
     },
     cat_filter(obj) {
       let params = {
