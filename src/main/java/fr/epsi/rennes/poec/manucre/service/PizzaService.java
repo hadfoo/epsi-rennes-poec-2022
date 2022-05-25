@@ -22,11 +22,17 @@ public class PizzaService {
 	
 
 	public List<Pizza> getAllPizza(){
+		/*
+		 * Service associé au dao getAllPizza
+		 */
 		List<Pizza> pizzas = pizzaDAO.getAllPizza();
 		return pizzas;
 	}
 	
 	public void createPizza(Pizza pizza) throws BusinessException {
+		/*
+		 * Service associé au dao createPizza
+		 */
 		if(pizza.getLibelle() == null) {
 			throw new BusinessException("pizza.libelle.null");
 		}
@@ -44,6 +50,9 @@ public class PizzaService {
 	}
 	
 	public void addIngredientToPizza(int pizzaId, int ingredientId) throws BusinessException {
+		/*
+		 * Service associé au dao addIngredientToPizza
+		 */
 		if(pizzaId < 0 || ingredientId < 0) {
 			throw new BusinessException("pizza.ingredient.id.invalide");
 		}
@@ -51,11 +60,17 @@ public class PizzaService {
 	}
 	
 	public Pizza getPizzaById (int pizzaId) {
+		/*
+		 * Service associé au dao getPizzaById
+		 */
 		return panierDAO.getPizzaById(pizzaId);
 	}
 	
 	@Transactional
 	public int supprimerPizza(int pizzaId) {
+		/*
+		 * Service associé au dao supprimerPizza
+		 */
 		pizzaDAO.supprimerPizza(pizzaId);
 		return pizzaId;
 	}

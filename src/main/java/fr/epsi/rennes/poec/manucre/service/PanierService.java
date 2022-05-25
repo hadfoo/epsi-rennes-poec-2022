@@ -16,6 +16,9 @@ public class PanierService {
 	private PanierDAO panierDAO;
 	
 	public int addPizza(Pizza pizza, int panierId) {
+		/*
+		 * Service associé au dao addPizza
+		 */
 		boolean exists= panierDAO.isPanierExists(panierId);
 		if(!exists) {
 			panierId = panierDAO.createPanier();
@@ -25,6 +28,10 @@ public class PanierService {
 	}
 	
 	public Panier getPanierById(int panierId) {
+		/*
+		 * Service associé au dao getPanierById
+		 * C'est ici que l'on fait les calculs de calories et du prix total du panier
+		 */
 		Panier panier = panierDAO.getPanierById(panierId);
 		double totalPanier = 0;
 		int totalCalories = 0;
@@ -49,6 +56,9 @@ public class PanierService {
 	
 	@Transactional
 	public int suppPizza(Pizza pizza, int panierId) {
+		/*
+		 * Service associé au dao suppPizza
+		 */
 		panierDAO.suppPizza(pizza, panierId);
 		return panierId;
 	}

@@ -18,6 +18,9 @@ import fr.epsi.rennes.poec.manucre.service.PizzaService;
 
 @RestController
 public class AdminController {
+	/*
+	 * Class des controller du role admin.
+	 */
 
 	@Autowired
 	private PizzaService pizzaService;
