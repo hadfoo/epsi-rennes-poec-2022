@@ -102,13 +102,15 @@ public class OrderDao {
     }
 
     @Transactional
-    public void createOrder(@RequestBody String customer, int price, List list_id) throws SQLException{
+    public void createOrder(@RequestBody Order customorderer) throws SQLException{
+        System.out.println("DAO AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
         StringBuilder sql = new StringBuilder();
         sql.append("SET autocommit: 0;");
         sql.append("START TRANSACTION");
         sql.append("SELECT @neworder := MAX(order_all.id) + 1 FROM order_all");
         StringBuilder insert_query = new StringBuilder();
         insert_query.append("INSERT INTO order_all (date, customer, price) values (NOW(), ?, ?)");
+        List list_id = new ArrayList();
         for(int i = 0; i < list_id.size(); i++) {
             String temp_query = "INSERT INTO order_has_product ('id_order', 'id_product')";
             temp_query += "VALUES (@neworder, " + list_id.get(i) + ");";

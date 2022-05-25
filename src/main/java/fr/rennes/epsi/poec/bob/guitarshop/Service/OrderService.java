@@ -44,8 +44,9 @@ public class OrderService {
 
     public void createOrder(Order order) throws SQLException {
         logger.info("##########ProductService createProduct()");
+        System.out.println("SERVICE AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
         try {
-            dao.createOrder(order.getCustomer_name(), (int) order.getPrice(), order.getContent());
+            dao.createOrder(order);
         } catch (SQLException e)
         {
             throw new TechnicalException(e);

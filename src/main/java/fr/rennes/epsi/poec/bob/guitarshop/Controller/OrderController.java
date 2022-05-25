@@ -33,10 +33,10 @@ public class OrderController {
         return orderService.getLastOrder();
     }
 
-    @PostMapping("/order/add")
+    @PostMapping("/add-order")
     public void createProduct(@RequestParam String customer_name) throws SQLException {
         logger.info("##########ProductController createProduct()");
-
+        System.out.println("CONTROLLER AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
         Order new_order = new Order();
         new_order.setCustomer_name(customer_name);
         orderService.createOrder(new_order);
