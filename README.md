@@ -24,4 +24,5 @@ start java server
 --------------------
 http://localhost:1969/
 ```
-    
+
+### Pour l'evaluation, le Java rendu n'est pas a la hauteur de mes esprances, mais j'ai pris beaucoup de temps pour implementer VueJS dans un projet SpringBoot en prévision de la MSPR (Securite d'un bus d'evenements, des props, VueX, VueRouter)
