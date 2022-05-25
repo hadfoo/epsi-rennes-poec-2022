@@ -1,0 +1,11 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="PizzaApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+    <option name="ACTIVE_PROFILES" />
+    <option name="DEBUG_MODE" value="true" />
+    <module name="pizza" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="fr.epsi.rennes.poec.gweltaz.PizzaApplication" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

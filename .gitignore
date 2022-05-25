@@ -1,5 +1,2 @@
-.classpath
-.project
-.settings
-/conf
+.idea
 target
