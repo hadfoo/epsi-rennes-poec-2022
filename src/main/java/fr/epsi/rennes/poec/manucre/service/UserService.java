@@ -25,6 +25,9 @@ public class UserService implements UserDetailsService{
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		/*
+		 * Service associé au dao loadUserByUsername
+		 */
 		try {
 			UserDetails user = userDAO.getUserByEmail(username);
 			if(user == null) {
@@ -38,6 +41,9 @@ public class UserService implements UserDetailsService{
 	}
 	
 	public void addUser(User user) {
+		/*
+		 * Service associé au dao addUser
+		 */
 		try {
 			user.setRole(UserRole.ROLE_USER.name());
 			userDAO.addUser(user);

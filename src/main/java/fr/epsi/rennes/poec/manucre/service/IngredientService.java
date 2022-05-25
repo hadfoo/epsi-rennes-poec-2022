@@ -14,6 +14,9 @@ public class IngredientService {
 	private IngredientDAO ingredientDAO;
 	
 	public List<Ingredient> getAllIngredients(){
+		/*
+		 * Service associé au dao getAllIngredients
+		 */
 		return ingredientDAO.getAllIngredients();
 	}
 }

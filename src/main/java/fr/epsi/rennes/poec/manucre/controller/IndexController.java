@@ -19,6 +19,9 @@ import fr.epsi.rennes.poec.manucre.service.PizzaService;
 
 @RestController
 public class IndexController {
+	/*
+	 * Class des controller public
+	 */
 	
 	@Autowired
 	private PizzaService pizzaService;

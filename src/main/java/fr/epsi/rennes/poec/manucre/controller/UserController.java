@@ -16,6 +16,10 @@ import fr.epsi.rennes.poec.manucre.service.UserService;
 @RestController
 public class UserController {
 	
+	/*
+	 * Class des controller du role user.
+	 */
+	
 	@Autowired
 	private UserService userService;
 	
