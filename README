@@ -1,0 +1,11 @@
+Utiliser galette.sql pour créer la base de données et la remplir.
+Lancer l'application.
+Sur le moteur de recherche, taper http://localhost:8080/index.html
+
+L'application permet ensuite de :
+- consulter la liste des galettes présentes dans la BDD,
+- créer de nouvelles galettes,
+- modifier les galettes (leur libellé et leurs ingrédients),
+- supprimer des galettes.
+
+J'ai eu besoin de me réapproprier l'énoncé, en repartant de zéro, pour pouvoir démarrer. Il ne correspond donc pas totalement à ce qui était attendu, mais montre une implémentation du CRUD de l'interface utilisateur jusqu'à la base de données.

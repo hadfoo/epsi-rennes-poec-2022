@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Application Galette</title>
+	<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+	<script src="/js/galettes.js" defer></script>
+</head>
+<body>
+	<div id="app">
+		<div class="galette-list">
+			Galettes :<br>
+			<ul class="galette-list">
+				<template v-for="(galette, galetteIndex) in galettes">
+					<li>
+						<a v-bind:href="'/public/galette.html?galetteId='+galette.id">
+							{{galette.libelle}}
+						</a> {{galette.nbCalories}} calories, {{galette.prix}} euros
+						<button v-on:click="supprimerGalette(galette)">Supprimer la galette</button>
+					</li>
+				</template>
+				<button v-on:click="isCreerGalette = true">Ajouter une Galette</button>
+				
+				<div class="galette-form" v-if="isCreerGalette">
+					<div>
+						Nom de la galette<br>
+						<input v-model="newGalette.libelle">
+					</div>
+					<div>
+						Ingredients :
+						<span v-if="newGalette.ingredients"
+							v-for="ingredient in newGalette.ingredients">
+							{{ingredient.libelle}},
+						</span><br>
+						<select v-model="newIngredient" v-on:change="addIngredient()">
+							<option></option>
+							<option v-for="ingredient in ingredients"
+								v-bind:value="ingredient">
+								{{ingredient.libelle}}
+							</option>
+						</select>
+					</div>
+					<div>
+						<button v-on:click="createGalette()">Créer la galette</button>
+					</div>
+				</div>
+			</ul>
+		</div>
+		<a href="/index.html">Retour</a>
+	</div>
+</body>
+</html>

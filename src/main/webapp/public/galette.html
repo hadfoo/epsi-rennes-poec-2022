@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Application Galette</title>
+	<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+	<script src="/js/galette.js" defer></script>
+</head>
+<body>
+	<div id="app">
+		
+		<div class="galette-form">
+			<input type="text" id="textLibelle" v-model="newGalette.libelle" v-bind:placeholder="galette.libelle">
+			<template v-for="(ingredient, indexIngredient) in ingredients">
+				<div>
+					<input type="checkbox" v-bind:id="ingredient.libelle" name="ingredientList">
+					<label v-bind:for="ingredient">{{ingredient.libelle}}</label>
+			    </div>
+			</template>
+			<button v-on:click="updateGalette()">Confirmer les modifications</button>
+			<a href="/public/galettes.html">Retour</button></a>
+			<div id="confirmer_label">Galette en attente de modification</div>
+		</div>
+	</div>
+</body>
+</html>

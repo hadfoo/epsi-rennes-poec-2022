@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Application Galette</title>
+	<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+	<script src="/js/carte.js" defer></script>
+</head>
+<body>
+	<div id="app">
+		<div class="galette-list">
+			Carte des galettes :<br>
+			<div class="galette-item" v-for="galette in galettes">
+				{{galette.libelle}}, {{galette.nbCalories}} calories, {{galette.prix}} euros<br>
+				Ingredients : 
+				<span v-for="ingredient in galette.ingredients">
+					{{ingredient.libelle}},
+				</span><br><br>
+			</div>
+		</div>
+		<a href="/index.html">Retour</a>
+	</div>
+</body>
+</html>
