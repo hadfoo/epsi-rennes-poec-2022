@@ -2,7 +2,7 @@ var app = new Vue({
 	el: '#app',
 	data() {
 		return {
-			pizza: {}
+			pizza : {}
 		}
 	},
 	mounted() {
@@ -10,10 +10,11 @@ var app = new Vue({
 		let pizzaId = url.searchParams.get('pizzaId');
 		
 		axios.get('/public/pizza?pizzaId='+pizzaId)
-		.then(response => {
+		.then(response =>{
 			this.pizza = response.data.data;
 		});
 	},
 	methods: {
+		
 	}
 });

@@ -8,21 +8,21 @@
 	<script src="/js/index.js" defer></script>
 </head>
 <body>
-<div id="app">
-	<div class="panier">
-		<a href="/public/panier.html">
-			Nombre de pizzas dans le panier :
-			{{panier && panier.pizzas ? panier.pizzas.length : 0}}
-		</a>
-	</div>
-	<div class="pizza-list">
-		<div class="pizza-item" v-for="pizza in pizzas">
-			<a v-bind:href="'/public/pizza.html?pizzaId='+pizza.id">
-				{{pizza.libelle}}
-			</a><br>
-			Nombre d'ingredients : {{pizza.ingredients.length}}<br>
-			<button v-on:click="ajouterPizza(pizza)">Ajouter</button>
+	<div id="app">
+		<div class="panier">
+			Nombre de pizzas dans le panier : {{panier.pizzas ? panier.pizzas.length : 0}}<br>
+			<a href="/public/panier.html">Voir mon panier</a>
+		</div><br><br>
+		<div class="pizza-list">
+			<div class="pizza-item" v-for="pizza in pizzas">
+				<a v-bind:href="'/public/pizza.html?pizzaId=' + pizza.id">{{pizza.libelle}}</a><br>
+				Ingredients : 
+				<span v-for="ingredient in pizza.ingredients">
+					{{ingredient.libelle}},
+				</span><br>
+				<button v-on:click="ajouterPizza(pizza)">Ajouter</button><br><br>
+			</div>
 		</div>
 	</div>
-</div>
 </body>
+</html>
